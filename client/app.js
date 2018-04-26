@@ -113,7 +113,7 @@ dogfacts.controller("thecontroller",["$scope","quizM","DataHandle",function($sco
  {
       var quizObject=
       {
-      	 quizeActive:false, 
+      	 quizeActive:false,
       	 resultsActive:false,
       	 correctAnswers:[],
       	 numCorrect:0,
