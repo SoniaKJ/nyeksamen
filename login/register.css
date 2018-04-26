@@ -1,0 +1,40 @@
+body {
+    height: 90%;
+}
+body {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+.f-register {
+    margin: auto;
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+}
+.f-register .checkbox {
+    font-weight: 420;
+}
+.f-register .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 14px;
+    font-size: 20px;
+}
+.f-register .form-control:focus {
+    z-index: 3;
+}
+.f-register input[type="text"] {
+    margin-bottom: 1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.f-register input[type="password"] {
+    margin-bottom: 14px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

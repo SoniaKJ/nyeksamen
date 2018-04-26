@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="register.css">
+
+</head>
+
+<body class="text-center">
+    <form class="f-register" id="quizRegister">
+        <h2 class="h2 mb-2 font-weight-normal">Register for the Awesome Dog Quiz</h2>
+        <h3 class="h6 mb-6 font-weight-normal">If you already are a registed user then go to Login!</h3>
+        <h3 class "h5 mb-5 font-weight-normal">Create your username</h3>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" class="form-control" placeholder="Username" required autofocus id="username">
+        <h3 class "h5 mb-5 font-weight-normal">Create your password</h3>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" class="form-control" placeholder="Password" required id="password">
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Register</button>
+        <a href="login.html" class="btn btn-primary btn-block btn-lg">Login</a>
+    </form>
+
+    <script>
+        let quizRegister = document.querySelector('#quizRegister')
+        let usernameField = document.querySelector('#username')
+        let passwordField = document.querySelector('#password')
+        quizRegister.addEventListener('submit', e => {
+            e.preventDefault()
+            registerUser()
+        })
+        function registerUser() {
+            let options = {
+                method: 'post',
+                credentials: 'include',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: usernameField.value,
+                    password: passwordField.value
+                })
+            }
+            fetch('/api/users', options) //Something is wrong here, maybe with the API? Why? ////////////////////////////////
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status == 'OK') {
+                        document.location.href = '/login.html'
+                    } else {
+                        alert(response.message)
+                    }
+                })
+        }
+    </script>
+
+  <script src="/server/database.js"></script> <!-- These links can not be found, why?? Do I even need to have them?-------------->
+  <script src="/server/register.login.js"></script>
+  <script src="/server/internalAPI.js"></script>
+
+</body>
+
+</html>

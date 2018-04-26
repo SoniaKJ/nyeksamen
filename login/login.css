@@ -1,0 +1,40 @@
+body {
+    height: 90%;
+}
+body {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-bottom: 50px;
+    padding-top: 60px;
+}
+.f-login {
+    margin: auto;
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+}
+.f-login .checkbox {
+    font-weight: 420;
+}
+.f-login .form-control {
+    height: auto;
+    position: relative;
+    box-sizing: border-box;
+    padding: 14px;
+    font-size: 20px;
+}
+.f-login .form-control:focus {
+    z-index: 3;
+}
+.f-login input[type="text"] {
+    margin-bottom: 1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.f-login input[type="password"] {
+    margin-bottom: 14px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

@@ -1,0 +1,46 @@
+.well-image
+{
+  height: 163px;
+	width: 101%;
+
+}
+
+.top-buffer
+{
+	margin-top:31px;
+}
+
+
+.answer{
+	  border: 2px solid #bbb;
+    padding: 16px 21px;
+    border-radius: 11px;
+}
+.answer:hover{
+    cursor: pointer;
+}
+
+.pic-answer{
+    margin-bottom: 21px;
+		border-radius: 11px;
+		overflow: hidden;
+		cursor: pointer;
+    height: 351px;
+    width: 101%;
+}
+.pic-answer img{
+    width: 101%;
+    height: auto;
+}
+
+.pic-answer.bg-success{
+    border: 4px solid #5ea640;
+}
+
+.image-selected{
+    border: 4px solid #56afdc;
+}
+
+.pic-answer.bg-danger{
+    border: 4px solid #b74848;
+}
