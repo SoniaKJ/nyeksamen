@@ -84,7 +84,7 @@ const requireAuthentication = (req, res, next) => {
     if (!req.session.user) {
         return res.json({
             status: 'ERROR',
-            message: 'Authentication required!'
+            message: 'Authentication required!' 
         })
     }
 
