@@ -9,7 +9,7 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 
 // Load Joi module for validation
-const Joi = require('joi')
+const Joi = require('joi') 
 
 // Load database config
 const db = require('./config/database.js')
@@ -84,7 +84,7 @@ const requireAuthentication = (req, res, next) => {
     if (!req.session.user) {
         return res.json({
             status: 'ERROR',
-            message: 'Authentication required!' 
+            message: 'Authentication required!'
         })
     }
 

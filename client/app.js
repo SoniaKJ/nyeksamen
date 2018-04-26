@@ -22,13 +22,13 @@ dogfacts.controller("thecontroller",["$scope","quizM","DataHandle",function($sco
 
 // The quiz controller
 
- dogfacts.controller("quizcntrl",["$scope","quizM","DataHandle",function($scope,quizM,DataHandle) //quizcntrl ///////////
+ dogfacts.controller("quizcntrl",["$scope","quizM","DataHandle",function($scope,quizM,DataHandle)
  {
 
         $scope.quizM=quizM;
         $scope.DataHandle=DataHandle;
          $scope.qActive=0;
-         var numQuestionsAnswered=0; ////////////////////////////////////////////////////////////////////////////
+         var numQuestionsAnswered=0;
          $scope.error=false;
          $scope.finalise=false;
 
@@ -63,7 +63,7 @@ dogfacts.controller("thecontroller",["$scope","quizM","DataHandle",function($sco
 
         $scope.questionAnswered=function()
         {
-        	var quizLength = DataHandle.dogQs.length; /////////dogQLength/////////////////////
+        	var quizLength = DataHandle.dogQs.length;
         	if(DataHandle.dogQs[$scope.qActive].selected !==null)
         	{
         		numQuestionsAnswered++;
@@ -113,9 +113,9 @@ dogfacts.controller("thecontroller",["$scope","quizM","DataHandle",function($sco
  {
       var quizObject=
       {
-      	 quizeActive:false, //////////////////////////////////////////////////////////////////////////////
+      	 quizeActive:false, 
       	 resultsActive:false,
-      	 correctAnswers:[], ///////////////////////correctAnswers/////////////////////////////////////////////////////
+      	 correctAnswers:[],
       	 numCorrect:0,
       	 changeState:function(metric,state)
       	 {

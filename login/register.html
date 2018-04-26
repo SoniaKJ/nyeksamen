@@ -49,17 +49,13 @@
                 .then(response => response.json())
                 .then(response => {
                     if (response.status == 'OK') {
-                        document.location.href = '/login.html'
+                        document.location.href = './login.html'
                     } else {
                         alert(response.message)
                     }
                 })
         }
     </script>
-
-  <script src="/server/database.js"></script> <!-- These links can not be found, why?? Do I even need to have them?-------------->
-  <script src="/server/register.login.js"></script>
-  <script src="/server/internalAPI.js"></script>
 
 </body>
 

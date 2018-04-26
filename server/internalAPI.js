@@ -1,4 +1,4 @@
-//This should be the api that allows the user information and quizresults to be displayed at the home page
+//This should be the api that allows the user information and quiz results to be displayed at the home page
 
 var Quiz = (function () {
   let quizResults = []
