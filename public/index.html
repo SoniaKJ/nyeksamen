@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dogfacts">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>General Dog Facts and Quiz</title>
+    <!-- Bootstrap and css -->
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>The Awesome Dog Quiz</h1>
+            <h3>
+                Learn about all of the dogs before you decide to take on
+                <strong>THE AWESOME DOG QUIZ</strong>
+            </h3>
+        </div>
+        <!-- I am using the controller for the view and using the ng-hide to tell when to show it -->
+
+	   <div ng-controller="thecontroller" ng-hide="quizM.quizeActive || quizM.resultsActive">
+
+          <!-- Search bar -->
+          <form class="form-inline well well-lg clearfix">
+             <!-- I am creating a search icon and a search bar-->
+              <span class="glyphicon glyphicon-search"></span>
+              <input type="text" placeholder="Search for dog..."
+              class="form-control" ng-model="Search">
+              <!-- I am creating the buttons "Start the Quiz" and "Home" on right side"-->
+              <button class="btn btn-primary btn-lg pull-right" ng-click="ActivateDogQuiz()">Start the Quiz</button>
+
+              <a href="home.html" class="btn btn-primary btn-lg pull-right">Home</a>
+
+          </form>
+           <!-- Here I am creating a row to contain the dogs -->
+
+          <div class="row">
+                <!-- This is my property on the model called data. This is being filtered by the search. -->
+            <div class="col-sm-6" ng-repeat="dog in dogsData | filter:Search">
+
+              <div class="well well-sm">
+                 <div class="row">
+                    <div class="col-md-6">
+                           <!-- I am using ng-src instead of src to allow correct angular functionality -->
+
+                         <img ng-src="{{dog.image_url}}"
+                         class="img-rounded img-responsive well-image">
+                    </div>
+                          <div class="col-md-6">
+                            <h4>{{dog.type}}</h4>
+                               <!-- I am data binding with angular -->
+
+                              <p><strong>Height: </strong>{{dog.height}}</p>
+                              <p><strong>Weight: </strong>{{dog.weight}}</p>
+                              <p><strong>Average Lifespan: </strong>{{dog.lifespan}}</p>
+                              <p><strong>Color: </strong>{{dog.color}}</p>
+                              <!--data-toggle="modal" opens the modal window
+                              data-target="#myModal" points to the id of the modal -->
+                              <button class="btn btn-warning pull-right"
+                              data-toggle="modal"
+                              data-target="#dog-info"
+                              ng-click="changeActivedog(dog)"> Read more </button>
+                          </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <!-- Now I am creating the markup for the modal -->
+
+         <div class="modal" id="dog-info">
+         <!-- I am using the class .modal-dialog to set op the margin. -->
+           <div class="modal-dialog">
+           <!-- The class modal-content styles the modal -->
+             <div class="modal-content">
+             <!-- The class modal-header is defining the style for the models header -->
+                   <div class="modal-header">
+                      <h2>{{activedog.type}}</h2>
+
+                   </div>
+                   <div class="modal-body">
+                         <div class="row">
+                             <div class="col-xs-8 col-xs-offset-2">
+
+                                <img ng-src="{{activedog.image_url}}" class="img-rounded img-responsive">
+
+                             </div>
+                         </div>
+                         <div class="row top-buffer">
+                             <div class="col-md-6">
+
+                                <p><strong>Height: </strong>{{activedog.height}}</p>
+                                <p><strong>Weight: </strong>{{activedog.weight}}</p>
+                                <p><strong>Average Lifespan: </strong>{{activedog.lifespan}}</p>
+                                <p><strong>Color: </strong>{{activedog.color}}</p>
+
+                             </div>
+                             <div class="col-xs-11 top-buffer">
+                                <p>{{activedog.description}}</p>
+                                <button class="btn btn-primary btn-lg pull-right" data-dismiss="modal"> Exit </button>
+
+                             </div>
+                        </div>
+                   </div>
+             </div>
+           </div>
+         </div>
+
+       <!-- Creating the controller -->
+       </div>
+       <!-- Here I am attaching the quizCtrl to the view and the ng-show when the quizActive flag is set -->
+       <div ng-controller="quizcntrl" ng-show="quizM.quizeActive">
+           <div class="row">
+               <div class="col-xs-7">
+                    <h3> Quiztions left: </h3>
+                    <div class="btn-toolbar">
+
+                       <button class="btn btn-lg" ng-repeat="question in DataHandle.dogQs"
+                       ng-class="{'btn-info':question.selected!=null,'btn-warning':question.selected==null}" ng-click="setQActive($index)">
+
+                       <!-- At this part I am displaying glyphicons, and using the ng-class to style them -->
+
+                           <span class="glyphicon" ng-class="{'glyphicon-pencil':question.selected!==null,'glyphicon-question-sign':question.selected==null}"
+                        ></span>
+                       </button>
+
+                    </div>
+
+               </div>
+               <div class="col-xs-4">
+                  <div class="row">
+                    <h3> Good to know: </h3>
+                    <div class="col-sm-4">
+                       <button class="btn btn-lg btn-info">
+                         <span class="glyphicon glyphicon-pencil"></span>
+                       </button>
+                        <p>Answered questions</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-lg btn-warning">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </button>
+                        <p>Unanswered questions</p>
+                    </div>
+
+                  </div>
+               </div>
+           </div>
+           <div class="row">
+           <div class="alert alert-danger" ng-show="error">
+           Error! You need to answer all of the questions!
+             <button class="close btn-lg" ng-click="error=false">&times</button>
+
+           </div>
+               <h2> The question: </h2>
+               <div class="well well-sm" ng-hide="finalise">
+                  <div class="row">
+                      <div class="col-xs-11">
+
+                         <h3>{{qActive+1 + ". " + DataHandle.dogQs[qActive].text}}</h3>
+
+                          <div class="row" ng-if="DataHandle.dogQs[qActive].type === 'text'">
+                            <div class="col-sm-6" ng-repeat="answer in DataHandle.dogQs[qActive].possibilities">
+                                <h4 class="answer" ng-class="{'bg-info': $index === DataHandle.dogQs[qActive].selected}" ng-click="selectAnswer($index)">
+                                 <!-- The possible answers will go here -->
+                                 {{answer.answer}}
+                               </h4>
+                            </div>
+                          </div>
+                          <div>
+                              <div class="row" ng-if="DataHandle.dogQs[qActive].type === 'image'">
+                                <div class="col-sm-6" ng-repeat="answer in DataHandle.dogQs[qActive].possibilities">
+                                    <div class="pic-answer" ng-class="{'image-selected': $index ===DataHandle.dogQs[qActive].selected}" ng-click="selectAnswer($index)">
+
+                                        <img ng-src="{{answer.answer}}">
+
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+
+                      </div>
+
+                  </div>
+
+                    <button class="btn btn-lg btn-info" ng-click="questionAnswered()"> Continue </button>
+             </div>
+             <div class="well well-sm" ng-show="finalise">
+                <div class="row">
+                    <div class="col-xs-11">
+                        <h2> Do you want to submit your answers? </h2>
+                        <button class="btn btn-lg btn-danger" ng-click="finalise = false"> No </button>
+                        <button class="btn btn-lg btn-success" ng-click="finaliseAnswers()"> Yes </button>
+                    </div>
+                </div>
+             </div>
+           </div>
+       </div>
+       <!-- Now I am adding a new controller for quiz result -->
+
+       <div ng-controller="resultsCtrl" ng-show="quizM.resultsActive">
+
+                <div class="row">
+                    <div class="col-xs-7">
+                        <h3> Your result: </h3>
+                        <div class="btn-toolbar">
+
+                           <!-- loop and controller again -->
+                            <button class="btn"
+                                    ng-repeat="question in DataHandle.dogQs"
+                                    ng-class="{'btn-success': question.correct, 'btn-danger': !question.correct}"
+                                    ng-click="setQActive($index)">
+
+                                        <span class="glyphicon"
+                                              ng-class="{'glyphicon-ok': question.correct, 'glyphicon-remove': !question.correct}">
+                                        </span>
+
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="row">
+                            <h3> Good to know: </h3>
+                            <div class="col-sm-5">
+                                <button class="btn btn-lg btn-success">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <p> The correct asnwers </p>
+                            </div>
+                            <div class="col-sm-5">
+                                <button class="btn btn-lg btn-danger">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <p> The incorrect answers </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                     <div class="row">
+                        <div class="col-xs-11 top-buffer">
+
+                            <h3>You scored {{quizM.numCorrect}} / {{DataHandle.dogQs.length}}</h3>
+
+                            <h2><strong>{{calculatePerc()}}%</strong></h2>
+
+                        </div>
+                    </div>
+
+    <!---------------------------------------------- How to save the quiz result??? ------------------------->
+
+                    <div class="row">
+                        <h2> The questions: </h2>
+                        <div class="well well-sm">
+                            <div class="row">
+                                <div class="col-xs-11">
+
+                                    <h3> {{qActive+1+"." + DataHandle.dogQs[qActive].text}} </h3>
+
+                                <div class="row" ng-if="DataHandle.dogQs[qActive].type==='text'">
+
+
+                                    <div class="col-sm-5" ng-repeat="answer in DataHandle.dogQs[qActive].possibilities">
+                                    <h3 class="answer" ng-class="getAnswerClass($index)">
+                                         {{answer.answer}}
+
+                                        <p class="pull-right"
+                                           ng-show="$index !==quizM.correctAnswers[results.qActive] && $index ===DataHandle.dogQs[qActive].selected"> You answered </p>
+
+                                        <p class="pull-right"
+                                           ng-show="$index === results.quizM.correctAnswers[results.qActive]"> The correct answer </p>
+                                    </h3>
+
+                                    </div>
+                                </div>
+
+
+                                        <div class="row" ng-if="DataHandle.dogQs[qActive].type==='image'">
+
+                                                <div class="col-sm-5" ng-repeat="answer in DataHandle.dogQs[qActive].possibilities">
+
+                                                    <div class="pic-answer" ng-class="getAnswerClass($index)">
+                                                             <img ng-src="{{answer.answer}}">
+                                                    </div>
+
+                                               </div>
+                                       </div>
+                               </div>
+                           </div>
+                        </div>
+
+                             <!-- At this place the ng-click is calling the reset method on the controller -->
+                             <button  class="btn btn-lg btn-primary" ng-click="reset()">Return to Facts</button>
+
+                    </div>
+         </div>
+</div>
+
+    <!-- Some third party js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="app.js"></script>
+
+
+</body>
+</html>

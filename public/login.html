@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="login.css">
+
+</head>
+
+<body class="text-center">
+    <form class="f-login" id="quizLogin">
+        <h2 class="h2 mb-2 font-weight-normal">Login and try out the Awesome Dog Quiz</h2>
+        <h3 class="h6 mb-6 font-weight-normal">If you dont have a user you need to register!</h3>
+        <h3 class "h5 mb-5 font-weight-normal">Insert username</h3>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" class="form-control" placeholder="Username" required autofocus id="username">
+        <h3 class "h5 mb-5 font-weight-normal">Insert password</h3>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" class="form-control" placeholder="Password" required id="password">
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Login</button>
+        <a href="register.html" class="btn btn-primary btn-block btn-lg">Register</a> <!-- the link dosent work?-->
+    </form>
+
+    <script>
+        let quizLogin = document.querySelector('#quizLogin')
+        let usernameField = document.querySelector('#username')
+        let passwordField = document.querySelector('#password')
+        quizLogin.addEventListener('submit', e => {
+            e.preventDefault()
+            loginUser()
+        })
+        function loginUser() {
+            let options = {
+                method: 'post',
+                credentials: 'include',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: usernameField.value,
+                    password: passwordField.value
+                })
+            }
+            fetch('/api/auth', options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status == 'OK') {
+                        document.location.href = './home.html'
+                    } else {
+                        alert(response.message)
+                    }
+                })
+        }
+    </script>
+</body>
+
+</html>
