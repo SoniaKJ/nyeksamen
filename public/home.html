@@ -1,112 +1,105 @@
-<!-- When a user is logged in, they shall return to this page.
-I want to display user information and quiz results.
-    There shall be a logout (that works!!!) and Facts buttons-->
-
 <!DOCTYPE html>
-<html lang="en" ng-app="dogfacts"> <!-- my ng dosent work. Why???-->
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>The Awesome Dog Quiz app</title>
-    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> -->
-    <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css"> <!-- linket virker ikke.. -->
-
+<title>The Awesome Dog Quiz app</title>
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    crossorigin="anonymous">
+<link rel="stylesheet" href="home.css">
 </head>
-
 <body>
 
-    <div class="container">
-        <div class="page-header">
-            <h1>Welcome to your profile at The Awesome Dog Quiz</h1>
-            <h3>
-                Go to <strong>FACTS</strong> and learn about all the dogs before you can take on
-                <strong>THE AWESOME DOG QUIZ</strong>
-            </h3>
-        </div>
+  <div class="header">
+      <h1>Welcome to your profile at The Awesome Dog Quiz</h1>
 
-    <form class="form-inline well well-lg clearfix">
+  </div>
 
-        <!--Create buttons on right side of foram.-->
-        <!-- logout function -->
-        <p>&nbsp;</p>
-        <p><a href="#!/login" class="btn btn-primary btn-lg pull-right">Logout</a></p>
+  <ul class="hi">
+    <li><h3> Go to <strong>FACTS</strong> and learn about all the dogs before you can take on
+    <strong>THE AWESOME DOG QUIZ</strong> </h3></li>
+    <li><a href="login.html" class="btn btn-primary btn-lg pull-right">Logout</a></li>
+    <li><a href="quiz.html" class="btn btn-primary btn-lg pull-right">Facts</a></li>
+  </ul>
 
-        <a href="index.html" class="btn btn-primary btn-lg pull-right">Facts</a>
+<!-- the box for the users own information and results -->
 
-    </form>
+<div class="user-box">
+  <h3> Profile </h3>
 
-    <div class="col-sm-6" ng-repeat="user in userData | filter:Search"> <!-- i want to pull user data from the database, but I dont know how...-->
+  <button class= "btn btn-primary" id="getData">GET DATA </button>
+<p id="output"></p>
 
-      <script type="text/javascript"> <!-- the script nosent work! -->
+<script type="javascript">
+document.getElementById('getData').addEventListener('click', getData);
 
-        <!-- the following is not correct.... But then what? -->
+function getData(){
 
-        function displayUser (user) {
-  const userTemplate = ({name, login: username, avatar_url, html_url: profile_url, public_repos  }) => `
-    <div class="card">
-      <div class="card-body">
-        <div class="media">
-          <img src="${avatar_url}" class="mr-3 rounded" width="80">
-          <div class="media-body">
-            <h5>${username}</h5>
-            <h6 class="text-muted">${name}</h6>
-            <p>
-              Public repositories: ${public_repos}
-            </p>
-            <a href="${profile_url}" target="_blank">View profile</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  `
-  let html = userTemplate(user)
-  document.querySelector('#single-user').innerHTML = html
+fetch(‘sampleUsers.json’)
+.then((res) => return res.json())
+.then((data) =>{
+let output = '<h2> Users Info </h2>';
+data.forEach((user) => {
+ result +=
+  `<ul>
+    <li> User ID : ${user.id} </li>
+    <li> User Name : ${user.name}</li>
+    <li> User Password : ${user.password} </li>
+    <li> User Quiz Results : ${user.quizobjs} </li>
+ </ul>
+  `;
+document.getElementById('result').innerHTML = result;
+});
+}).catch((err)=>console.log(err))
 
-   </script>
+}
+</script>
+</div>
 
-      <div class="well well-sm">
-         <div class="row">
-            <div class="col-md-6">
-            </div>
-                  <div class="col-md-6" id="user-box">
-                    <h4>Profile</h4>
-                       <!-- more angular data binding -->
+<!-- the box for all the users and their results -->
 
-                      <p><strong>Username: </strong>{{user.username}}</p> <!-- user.username is probably not right. The same goes for the quizResults...-->
-                      <p><strong>Your quiz results: </strong>{{user.quizResults}}</p> <!-- Nat that important, I will only do this if I have time -->
+<h3 class="allusers">All users and their results</h3>
+  <ul id="users"></ul>
 
-                  </div>
-       </div><!-- row -->
-     </div><!-- well -->
-   </div><!-- col-xs-6 -->
- </div>
+ <script type="javascript">
 
-   <div class="col-sm-6" ng-repeat="quiz results in userData | filter:Search"> <!-- i want to pull user data from the database, but I dont know how...-->
+       function getQuizobjs() {
 
-    <div class="well well-sm">
-       <div class="row">
-          <div class="col-md-6">
-          </div>
-                <div class="col-md-6" id="qResults">
-                  <h4>Are you as good as the other users?</h4>
-                    <!-- more angular data binding -->
+           let options = {
+               method: 'get'
+           }
+           return fetch('/api/quizobjs', options)
+           .then(response => response.json())
+       }
 
-                    <p><strong> All users quiz results: </strong>{{all.quizResults}}</p> <!-- Nat that important, I will only do this if I have time -->
+       function displayQuizobjs(quizobjs) {
 
-                </div>
-      </div><!-- row -->
-    </div><!-- well -->
-  </div><!-- col-xs-6 -->
- </div>
+           let list = document.querySelector('#users')
 
-    <script src="./app.js"></script>
-    <script src="./server.js"></script>
-    <script src="./internalAPI.js"></script>
+           let html = ''
 
-    <!-- User service that uses an api. Maybe I dont need this...? -->
+           quizobjs.forEach(quizobj => {
+               html += `<li>(#${quizobj.id}) | ${quizobj.text}</li>`
+           })
+
+           list.innerHTML = html
+       }
+
+       getQuizobjs().then(displayQuizobjs)
+
+           // Perform the request
+           fetch('/api/quizobjs', options)
+           .then(response => response.json())
+           .then(json => {
+               // Check the response in the console
+               console.log('Response', json)
+
+               getQuizobjs().then(displayQuizobjs)
+
+           })
+       })
+
+ </script>
 
 </body>
 </html>

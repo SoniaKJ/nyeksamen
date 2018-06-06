@@ -1,0 +1,17 @@
+body {
+    background-image: url("https://www.rspcansw.org.au/wp-content/uploads/2017/08/50_a-feature_dogs-and-puppies_mobile.jpg");
+}
+
+.hi {
+    background-color: #98FB98;
+    padding: 15px;
+    list-style-type: none;
+    text-align: right;
+}
+
+.hi li {
+    display: inline-block;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}

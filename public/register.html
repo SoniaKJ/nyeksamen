@@ -45,7 +45,7 @@
                     password: passwordField.value
                 })
             }
-            fetch('/api/users', options) //Something is wrong here, maybe with the API? Why? ////////////////////////////////
+            fetch('/api/users', options)
                 .then(response => response.json())
                 .then(response => {
                     if (response.status == 'OK') {
@@ -54,7 +54,8 @@
                         alert(response.message)
                     }
                 })
-                
+      }
+
     </script>
 
     <script src="./internalAPI.js"></script>

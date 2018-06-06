@@ -5,8 +5,7 @@ const sequelize = new Sequelize('sqlite:./database.sqlite', {
     logging: false
 })
 
-// Custom function to hash password attribute
-// on User model
+// Custom function to hash password attribute on User model
 const hashPassword = (user, options) => {
     return bcrypt.hash(user.password, 10)
     .then(hash => {
@@ -31,19 +30,16 @@ db.User = sequelize.define('user', {
     }
 })
 
-db.QuizResult = sequelize.define('quizResult', {
+db.Quizobj = sequelize.define('quizobj', {
     text: {
         type: Sequelize.STRING,
         allowNull: false
     }
 })
 
-// Model associations
-db.User.hasMany(db.QuizResult)
-db.QuizResult.belongsTo(db.User)
-
-// Make sure password is hashed
-// when user is created and updated
+db.User.hasMany(db.Quizobj)
+db.Quizobj.belongsTo(db.User)
+                                                    
 db.User.beforeCreate(hashPassword)
 db.User.beforeUpdate(hashPassword)
 

@@ -1,13 +1,9 @@
-//This should be the api that allows the user information and quiz results to be displayed at the home page
-
 var Quiz = (function () {
-  let quizResults = []
+  let quizobjs = []
   // Front end related
 
-  // Elements
   const userBoxElement = document.querySelector('#user-box')
 
-  // Templates
   const userTemplate = ({ username }) => `
     <li class="media my-2">
       <div class="media-body">
@@ -16,65 +12,45 @@ var Quiz = (function () {
     </li>
   `
 
-  // Private frontend module - only available within the chat module
   let frontend = {}
 
   // Method to display the users previus quiz results in the user box.
-  frontend.displayQuizResults = function (quizResults) {
-    userBoxElement.innerHTML = frontend.getQuizResultsHTML(quizResults)
-  }
-
-  //Maybe this is better?
-
-  // Initializing an empty object via object literal notation
-  let module = {}
-
-  // Load all quiz results and display them
-  module.getQuizResults()
-  .then(allQuizResults => {
-      quizResults = allQuizResults
-
-      frontend.displayQuizResults(quizResults)
-   })
+  frontend.displayQuizobjs = function (quizobjs) {
+    userBoxElement.innerHTML = frontend.getQuizobjsHTML(quizobjs)
   }
 
 
 //Real time feature
 
-  // Function which sets up listeners for Socket.io events
-  // And loads initial quiz results to the user box
   function initialize() {
-    // Setup the socket
     let socket = io()
 
-    // What to do when the "new quiz result" event is received
-    socket.on('new quizResult', quizResult => {
-        // Push the quiz result to our internal array (used for local search)
-        quizResults.push(quizResult)
+    socket.on('new quizobj', quizobj => {
 
-        // Add the quiz result to the user box
-        frontend.addQuizResult(quizResult)
+        quizobjs.push(quizobj)
+
+       // Add the quiz result to the user box
+        frontend.addQuizobj(quizobj)
     })
 
-  // Run the initialize function
   initialize()
 
   return module
 })()
 
-function UserQuizResult (text) {
+function UserQuizobj (text) {
   this.text = text
 }
 
-document.querySelector('#user-box').addEventListener('submit', event => {
+document.querySelector('#users').addEventListener('submit', event => {
   event.preventDefault()
 
-  let input = document.querySelector('#qResults') // ID for the place i want all of the quiz results to be postet /////
+  let input = document.querySelector('#users') // ID for the place i want all of the quiz results to be postet /////
 
   let text = input.value
-  let newQuizResultObject = new qResults(text)
+  let newQuizResultObject = new quizobj(text)
 
-  Chat.sendQuizResult(newQuizResultObject)
+  Chat.sendQuizobj(newQuizResultObject)
 
   input.value = ''
 })
